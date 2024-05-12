@@ -19,8 +19,4 @@ public class Pessoa
     public string Sobrenome { get; set; }
     public string NomeCompleto => $"{Nome} {Sobrenome}".ToUpper();
 
-    public void CastrarPessoa()
-    {
-
-    }
 }

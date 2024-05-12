@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace DesafioProjetoHospedagem.Models
 {
     public class Reserva
@@ -6,7 +8,9 @@ namespace DesafioProjetoHospedagem.Models
         public Suite Suite { get; set; }
         public int DiasReservados { get; set; }
 
-        public Reserva() { }
+        public Reserva()
+        {
+        }
 
         public Reserva(int diasReservados)
         {
@@ -20,9 +24,22 @@ namespace DesafioProjetoHospedagem.Models
             Hospedes = ocupacaoHospedes ? hospedes : throw new Exception("Capacidade de hospedes não pode ultrapassar a capacidade da Suite");
         }
 
-        public void CadastrarSuite(Suite suite)
+        public void CadastrarSuite(List<Suite> listaDeDados)
         {
-            Suite = suite;
+            Console.WriteLine("Selecione a suite");
+
+            int numeroDaSuite = 0;
+            foreach (Suite suite in listaDeDados)
+            {
+                Console.WriteLine($"N° {numeroDaSuite + 1} Tipo: {suite.TipoSuite} | Capacidade: {suite.Capacidade} | Valor da Diaria: {suite.ValorDiaria.ToString(":C")}");
+                numeroDaSuite++;
+            }
+
+            Suite = listaDeDados[Convert.ToInt32(Console.ReadLine()) - 1];
+
+            Console.WriteLine("Quantos dias seram reservados?");
+            DiasReservados = Convert.ToInt32(Console.ReadLine());
+
         }
 
         public int ObterQuantidadeHospedes()
@@ -43,6 +60,20 @@ namespace DesafioProjetoHospedagem.Models
             }
 
             return valor;
+        }
+
+        public void ListarHospedes(List<Pessoa> hospedes)
+        {
+            foreach (Pessoa item in hospedes)
+            {
+                Console.WriteLine($"Nome: {item.NomeCompleto}");
+            }
+
+            if (hospedes.Count == 0)
+            {
+                Console.WriteLine($"Sem hospedes na lista");
+            }
+            Console.ReadLine();
         }
     }
 }
