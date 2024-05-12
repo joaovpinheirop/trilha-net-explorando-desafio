@@ -35,7 +35,6 @@ namespace DesafioProjetoHospedagem.Models
 
             decimal valor = DiasReservados * Suite.ValorDiaria;
 
-
             if (DiasReservados >= 10)
             {
                 decimal percentualDesconto = 10;
