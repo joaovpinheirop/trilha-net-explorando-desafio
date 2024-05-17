@@ -42,13 +42,13 @@ namespace DesafioProjetoHospedagem.Models
 
                     case "2":
                         menu = false;
+                        Environment.Exit(1);
                         break;
 
                     default:
                         Console.WriteLine("Opção não valida");
                         break;
                 }
-
                 Console.WriteLine("Pressione enter para Continuar");
                 Console.ReadLine();
             }
@@ -64,34 +64,73 @@ namespace DesafioProjetoHospedagem.Models
                 Console.Clear();
                 Console.WriteLine("Digite sua Opção");
                 Console.WriteLine("1 - Adicionar Pessoa");
-                Console.WriteLine("2 - Listar");
-                Console.WriteLine("3 - Continuar");
-                Console.WriteLine("4 - Voltar");
+                Console.WriteLine("2 - Remover Pessoa");
+                Console.WriteLine("3 - Lista de pessoas ");
+                Console.WriteLine("4 - Continuar");
+                Console.WriteLine("5 - Voltar");
 
                 switch (Console.ReadLine())
                 {
                     case "1":
                         Console.WriteLine("Digite o nome");
                         string nome = Console.ReadLine();
+                        while (nome == "")
+                        {
+                            Console.WriteLine("Digite o nome Valido");
+                            nome = Console.ReadLine();
+                        }
 
                         Console.WriteLine("Digite o sobrenome");
                         string sobrenome = Console.ReadLine();
+                        while (sobrenome == "")
+                        {
+                            Console.WriteLine("Digite o sobrenome Valido");
+                            sobrenome = Console.ReadLine();
+                        }
 
                         Pessoa p = new Pessoa(nome: nome);
                         hospedes.Add(p);
                         break;
 
                     case "2":
-                        reserva.ListarHospedes(hospedes);
+                        Console.Clear();
+                        Console.WriteLine("Digite sua Opção");
+                        Console.WriteLine("Digite Cancelar para cancelar a operação");
+
+                        Console.WriteLine("Quem vai ser removido da lista?");
+
+                        int contador = 0;
+                        foreach (Pessoa hospede in hospedes)
+                        {
+                            Console.WriteLine($"Nº {contador}, Nome: {hospede.NomeCompleto}");
+                            contador++;
+                        }
+
+                        string remover = Console.ReadLine();
+                        while (remover == "" && remover != "Cancelar")
+                        {
+                            Console.WriteLine("Digite um numero valido");
+                        }
+                        if (remover.ToUpper() == "CANCELAR")
+                        {
+                            break;
+                        }
+
+                        hospedes.RemoveAt(Convert.ToInt32(remover));
+                        Console.WriteLine("Hospede removido com sucesso");
                         break;
 
                     case "3":
+                        reserva.ListarHospedes(hospedes);
+                        break;
+
+                    case "4":
                         menuSuite = true;
                         menuReserva = false;
                         MenuSuite();
                         break;
 
-                    case "4":
+                    case "5":
                         menu = true;
                         menuReserva = false;
                         Home();
@@ -101,12 +140,10 @@ namespace DesafioProjetoHospedagem.Models
                         Console.WriteLine("Opção não valida");
                         break;
                 }
-
                 Console.WriteLine("Pressione enter para Continuar");
                 Console.ReadLine();
             }
         }
-
         public void MenuSuite()
         {
             Reserva reserva = new Reserva();
@@ -122,10 +159,12 @@ namespace DesafioProjetoHospedagem.Models
                 switch (Console.ReadLine())
                 {
                     case "1":
+                        // TODO: Verificar se o numero da suite exite
                         reserva.CadastrarSuite(Suite);
                         break;
 
                     case "2":
+                        // TODO: Verificar se tem alguma suite selecionada
                         // Cadastrar hospedes na suite
                         reserva.CadastrarHospedes(hospedes);
                         Console.WriteLine("Reserva realizada");

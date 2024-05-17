@@ -15,8 +15,32 @@ public class Pessoa
         Sobrenome = sobrenome;
     }
 
-    public string Nome { get; set; }
-    public string Sobrenome { get; set; }
+    public string Nome
+    {
+        get => _nome;
+        set
+        {
+            if (value == "")
+            {
+                throw new Exception("Sem nome no campo");
+            }
+            _nome = value;
+        }
+    }
+    public string Sobrenome
+    {
+        get => _sobrenome;
+        set
+        {
+            if (value == "")
+            {
+                throw new Exception("Sem nome no campo");
+            }
+            _sobrenome = value;
+        }
+    }
+    public string _nome;
+    public string _sobrenome;
     public string NomeCompleto => $"{Nome} {Sobrenome}".ToUpper();
 
 }

@@ -19,8 +19,8 @@ namespace DesafioProjetoHospedagem.Models
 
         public void CadastrarHospedes(List<Pessoa> hospedes)
         {
+            // Verificar se a suite comporta a quantidade de hospedes
             bool ocupacaoHospedes = hospedes.Count <= Suite.Capacidade;
-
             Hospedes = ocupacaoHospedes ? hospedes : throw new Exception("Capacidade de hospedes não pode ultrapassar a capacidade da Suite");
         }
 
@@ -28,17 +28,32 @@ namespace DesafioProjetoHospedagem.Models
         {
             Console.WriteLine("Selecione a suite");
 
-            int numeroDaSuite = 0;
-            foreach (Suite suite in listaDeDados)
+            int escolha = -1;
+            while (escolha < 1 || escolha > listaDeDados.Count)
             {
-                Console.WriteLine($"N° {numeroDaSuite + 1} Tipo: {suite.TipoSuite} | Capacidade: {suite.Capacidade} | Valor da Diaria: {suite.ValorDiaria.ToString(":C")}");
-                numeroDaSuite++;
+                Console.Write("Digite o número correspondente à suíte desejada: ");
+                if (!int.TryParse(Console.ReadLine(), out escolha))
+                {
+                    Console.WriteLine("Por favor, digite um número válido.");
+                }
             }
-
             Suite = listaDeDados[Convert.ToInt32(Console.ReadLine()) - 1];
 
             Console.WriteLine("Quantos dias seram reservados?");
-            DiasReservados = Convert.ToInt32(Console.ReadLine());
+            int dias = Convert.ToInt32(Console.ReadLine());
+            while (dias <= 0)
+            {
+                if (!int.TryParse(Console.ReadLine(), out dias))
+                {
+                    Console.WriteLine("Por favor, digite um número válido de dias.");
+                    continue;
+                }
+
+                if (dias <= 0)
+                {
+                    Console.WriteLine("Por favor, digite um número maior que zero.");
+                }
+            }
 
         }
 
